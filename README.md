@@ -6,15 +6,15 @@ Monorepo con **frontend Flutter** (web + Android, iOS listo) y
 ```
 Kontec/
 ├── lib/   app/  core/  features/   # 🖥️ Frontend Flutter (Clean + MVVM)
-├── server/                         # 🟩 Backend Node.js + TypeScript (RECOMENDADO)
+├── server/                         # 🟩 Backend Node.js + TypeScript
 │   ├── src/domain|data|app|index   #    misma separación de capas que el front
 │   ├── tests/                      #    tests con Vitest + Supertest
-│   └── Dockerfile                  #    listo para desplegar en el VPS
-├── api/                            # 🐸 Backend Dart Frog (versión original, de referencia)
-├── tool/                           # 🛠️ Scripts de desarrollo
+│   └── Dockerfile                  #    listo para desplegar (VPS/Docker)
+├── tool/                           # 🛠️ Scripts de desarrollo y despliegue
 │   ├── dev-all.ps1                 #    abre las DOS terminales de golpe
-│   ├── dev-api.ps1                 #    terminal 1 → backend :3000 (Node por defecto)
-│   └── dev-web.ps1                 #    terminal 2 → frontend :8080 (CORS libre)
+│   ├── dev-api.ps1                 #    terminal 1 → backend :3000
+│   ├── dev-web.ps1                 #    terminal 2 → frontend :8080 (CORS libre)
+│   └── build.ps1                   #    compila todo → dist\ ZIPs para Hostinger
 └── test/                           # 🧪 tests del frontend
 ```
 
@@ -32,16 +32,13 @@ powershell -ExecutionPolicy Bypass -File tool\dev-all.ps1
 # TERMINAL 1 — Backend Node.js (http://localhost:3000)
 powershell -ExecutionPolicy Bypass -File tool\dev-api.ps1
 
-# (alternativa) Terminal 1 con el backend Dart Frog original
-powershell -ExecutionPolicy Bypass -File tool\dev-api.ps1 -Runtime dart
-
 # TERMINAL 2 — Frontend (Flutter web en http://localhost:8080, CORS libre)
 powershell -ExecutionPolicy Bypass -File tool\dev-web.ps1
 ```
 
 | Terminal | Puerto | Hot reload |
 |---|---|---|
-| 1 · `dev-api.ps1` | `http://localhost:3000` | automático al guardar en `server/` (o `api/` si `-Runtime dart`) |
+| 1 · `dev-api.ps1` | `http://localhost:3000` | automático al guardar en `server/` |
 | 2 · `dev-web.ps1` | `http://localhost:8080` | `r` = recargar · `R` = reiniciar |
 
 **Endpoints disponibles:** `GET /` (health) · `GET /todos` · `POST /todos {"title":"..."}`
@@ -212,20 +209,40 @@ server/
   Los handlers no cambian.
 - ⚠️ **Memoria volátil**: mientras no haya BD, la lista se vacía al reiniciar.
 
-### Backend alternativo (Dart Frog) — `api/`
+### Backend alternativo
 
-Se conserva la versión original en Dart por si se quiere retomar:
-`powershell -File tool\dev-api.ps1 -Runtime dart`. Mismos endpoints y tests.
+*(eliminado: el proyecto usa únicamente Node.js — el backend Dart Frog original
+queda en el historial de git del primer commit, por si se quisiera retomar)*
 
 ## Despliegue — recomendación para la empresa (Hostinger)
 
-**Decisión tomada:** pueden contratar VPS + prefieren Node.js → **todo en un
-VPS de Hostinger** (KVM 1: **6,49 $/mes** de intro, **11,99 $/mes** de renovación
-a 24 meses; 1 vCPU, 4 GB RAM, 50 GB NVMe). Front y back en el mismo servidor.
+**Decisión tomada:** front Flutter + back **Node.js**, todo subible a Hostinger.
+Dos rutas posibles (el código es idéntico para las dos):
 
-> Alternativa *managed* (sin tocar servidor): **Web Apps Hosting** de Hostinger
-> desde 3,99 $/mes (renovación ~16,99 $/mes) para el back Node, y el front como
-> sitio estático. Nota: su entorno **no ejecuta Dart**, por eso el back es Node.
+| | 🅰️ Web Apps gestionado | 🅱️ VPS KVM 1 |
+|---|---|---|
+| Precio | 3,99 $/mes intro → ~16,99 $ renovación | 6,49 $/mes intro → **11,99 $/mes** renovación |
+| Despliegue | subir ZIP o `git push` (hPanel levanta la app) | `docker build` / `pm2` en el server |
+| Administra el server | Hostinger | la empresa |
+| Front | sitio estático (File Manager) | mismo server (Nginx) |
+
+### 🚀 Subida rápida: un solo comando de build
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tool\build.ps1 -ApiUrl https://api.tudominio.com
+```
+
+Genera **dos ZIPs listos** en `dist\`:
+
+| ZIP | Contenido | Dónde va en Hostinger |
+|---|---|---|
+| `kontec-web.zip` | Front compilado (`build\web`) con `.htaccess` SPA incluido | **File Manager → extraer en `public_html`** |
+| `kontec-api.zip` | Backend con `dist\` ya compilado (sin `node_modules`) | **App Node de hPanel** (start: `npm start`) o VPS |
+
+El `.htaccess` que incluye el ZIP ya resuelve las rutas de `go_router`
+(recargas y enlaces directos tipo `midominio.com/tasks`) en Apache/LiteSpeed
+(Hostinger). En el front solo recuerda compilar **siempre** con
+`--dart-define=API_URL=https://api.tudominio.com` (el script ya lo hace).
 
 ### 1️⃣ Frontend (archivos estáticos)
 
@@ -234,8 +251,8 @@ flutter build web --release --dart-define=API_URL=https://api.tudominio.com
 ```
 Subir el contenido de `build\web\` a `/var/www/tudominio.com` (o `public_html`).
 
-⚠️ **Rutas de go_router** en el servidor (Nginx/LiteSpeed): redirigir todo a
-`index.html`, por ejemplo en Nginx:
+⚠️ **Rutas de go_router** → ya resueltas con `web\.htaccess` incluido en el build.
+Si algún día usas Nginx a pelo, sería:
 ```nginx
 location / { try_files $uri $uri/ /index.html; }
 ```
@@ -288,11 +305,6 @@ flutter test
 cd server
 npm run typecheck   # TypeScript estricto
 npm test            # 6 tests (Vitest + Supertest)
-
-# Backend Dart alternativo (dentro de api/)
-cd api
-dart analyze
-dart test           # 5 tests
 ```
 
 La arquitectura permite testear cada capa por separado: en `test/widget_test.dart`

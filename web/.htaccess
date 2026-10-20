@@ -1,0 +1,14 @@
+# Kontec — reglas para hosting con Apache/LiteSpeed (Hostinger)
+# Todas las rutas que no existan como fichero caen en index.html
+# para que go_router (rutas tipo /tasks) funcione al recargar o entrar directo.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Compresión (los archivos JS de Flutter pesan)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>

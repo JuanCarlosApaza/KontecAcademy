@@ -44,5 +44,8 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Builds de producción generados por tool\build.ps1
+/dist/
+
 # Widget Preview related
 .widget_preview/
