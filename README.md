@@ -323,3 +323,7 @@ se sustituye el repositorio real por un fake en memoria sin tocar la UI, y en
 - [ ] Manejo de errores global (dio interceptor → `Failure` + logging)
 - [ ] Autenticación (token en interceptores + guard en el router)
 - [ ] Generación de código con `riverpod_generator`/`freezed` si el proyecto crece
+- [ ] **Android (cuando toque)**: permiso `INTERNET` en
+      `android/app/src/main/AndroidManifest.xml` (¡solo lo tienen debug/profile!),
+      cambiar `android:label="kontec"` por el nombre de marca, y probar la API
+      desde el emulador con `10.0.2.2:3000` (o IP local en móvil físico)
