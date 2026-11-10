@@ -3,7 +3,7 @@
   Abre DOS terminales: una con el backend (API) y otra con el frontend (web).
 
 .DESCRIPTION
-  Terminal 1: tool\dev-api.ps1   -> API Dart Frog en http://localhost:3000
+  Terminal 1: tool\dev-api.ps1   -> Backend Node.js en http://localhost:3000
   Terminal 2: tool\dev-web.ps1   -> Flutter web en http://localhost:8080 (CORS libre)
 
   Ambas mantienen hot reload: cada una se recarga al guardar sus archivos.
@@ -18,7 +18,7 @@ Write-Host 'Abriendo dos terminales... (1 = backend · 2 = frontend)' -Foregroun
 # Terminal 1 — Backend
 Start-Process powershell -ArgumentList @(
   '-NoExit', '-ExecutionPolicy', 'Bypass', '-NoProfile',
-  '-Command', "Set-Location '$root'; Write-Host 'TERMINAL 1 · Backend (Dart Frog)' -ForegroundColor Cyan; & '$PSScriptRoot\dev-api.ps1'"
+  '-Command', "Set-Location '$root'; Write-Host 'TERMINAL 1 · Backend (Node.js)' -ForegroundColor Cyan; & '$PSScriptRoot\dev-api.ps1'"
 )
 
 # Terminal 2 — Frontend

@@ -9,15 +9,15 @@ export class InMemoryTodoRepository implements TodoRepository {
   private readonly todos: Todo[] = [];
   private nextId = 1;
 
-  findAll(): Todo[] {
+  async findAll(): Promise<Todo[]> {
     return [...this.todos];
   }
 
-  findById(id: number): Todo | undefined {
+  async findById(id: number): Promise<Todo | undefined> {
     return this.todos.find((todo) => todo.id === id);
   }
 
-  create(title: string): Todo {
+  async create(title: string): Promise<Todo> {
     const todo: Todo = { id: this.nextId++, title, completed: false };
     this.todos.push(todo);
     return todo;

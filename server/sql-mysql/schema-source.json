@@ -1,0 +1,2612 @@
+{
+  "generatedAt": "2026-11-10T18:28:58.270Z",
+  "source": "supabase (xaratebbmgffxijfigio) via pooler — solo lectura",
+  "note": "Fuente de verdad para redactar 000_base_schema.sql (MySQL).",
+  "tables": {
+    "_migrations": {
+      "columns": [
+        {
+          "table_name": "_migrations",
+          "column_name": "name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "_migrations",
+          "column_name": "applied_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "_migrations",
+          "name": "_migrations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (name)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "_migrations",
+          "indexname": "_migrations_pkey",
+          "indexdef": "CREATE UNIQUE INDEX _migrations_pkey ON public._migrations USING btree (name)"
+        }
+      ]
+    },
+    "carts": {
+      "columns": [
+        {
+          "table_name": "carts",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "carts",
+          "column_name": "course_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "carts",
+          "column_name": "added_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "carts",
+          "column_name": "item_type",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'course'::text",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "carts",
+          "name": "carts_item_type_check",
+          "type": "c",
+          "definition": "CHECK ((item_type = ANY (ARRAY['course'::text, 'path'::text, 'membership'::text])))"
+        },
+        {
+          "table_name": "carts",
+          "name": "carts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (user_id, course_id)"
+        },
+        {
+          "table_name": "carts",
+          "name": "carts_user_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "carts",
+          "indexname": "carts_pkey",
+          "indexdef": "CREATE UNIQUE INDEX carts_pkey ON public.carts USING btree (user_id, course_id)"
+        }
+      ]
+    },
+    "categories": {
+      "columns": [
+        {
+          "table_name": "categories",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "categories",
+          "column_name": "name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "categories",
+          "column_name": "slug",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "categories",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "categories",
+          "name": "categories_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "categories",
+          "name": "categories_slug_key",
+          "type": "u",
+          "definition": "UNIQUE (slug)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "categories",
+          "indexname": "categories_pkey",
+          "indexdef": "CREATE UNIQUE INDEX categories_pkey ON public.categories USING btree (id)"
+        },
+        {
+          "tablename": "categories",
+          "indexname": "categories_slug_key",
+          "indexdef": "CREATE UNIQUE INDEX categories_slug_key ON public.categories USING btree (slug)"
+        }
+      ]
+    },
+    "courses": {
+      "columns": [
+        {
+          "table_name": "courses",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "description",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "image_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "category_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "teacher_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "modality",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'asynchronous'::text",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "total_hours",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "YES",
+          "column_default": "0",
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 8,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "start_date",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 9,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "price",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "YES",
+          "column_default": "0.00",
+          "character_maximum_length": null,
+          "numeric_precision": 10,
+          "numeric_scale": 2,
+          "ordinal_position": 10,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'active'::text",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 11,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 12,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 13,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "compare_at_price",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 10,
+          "numeric_scale": 2,
+          "ordinal_position": 14,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "total_weeks",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 15,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "professor_bio",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 16,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "teaching_method",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 17,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "target_audience",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 18,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "certificate_info",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 19,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "courses",
+          "column_name": "career_opportunities",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 20,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "courses",
+          "name": "courses_category_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL"
+        },
+        {
+          "table_name": "courses",
+          "name": "courses_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "courses",
+          "name": "courses_teacher_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE SET NULL"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "courses",
+          "indexname": "courses_pkey",
+          "indexdef": "CREATE UNIQUE INDEX courses_pkey ON public.courses USING btree (id)"
+        }
+      ]
+    },
+    "enrollments": {
+      "columns": [
+        {
+          "table_name": "enrollments",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "enrollments",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "enrollments",
+          "column_name": "course_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "enrollments",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'pending_payment'::text",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "enrollments",
+          "column_name": "enrolled_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "enrollments",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "enrollments",
+          "name": "enrollments_course_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "enrollments",
+          "name": "enrollments_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "enrollments",
+          "name": "enrollments_user_id_course_id_key",
+          "type": "u",
+          "definition": "UNIQUE (user_id, course_id)"
+        },
+        {
+          "table_name": "enrollments",
+          "name": "enrollments_user_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "enrollments",
+          "indexname": "enrollments_pkey",
+          "indexdef": "CREATE UNIQUE INDEX enrollments_pkey ON public.enrollments USING btree (id)"
+        },
+        {
+          "tablename": "enrollments",
+          "indexname": "enrollments_user_id_course_id_key",
+          "indexdef": "CREATE UNIQUE INDEX enrollments_user_id_course_id_key ON public.enrollments USING btree (user_id, course_id)"
+        }
+      ]
+    },
+    "learning_paths": {
+      "columns": [
+        {
+          "table_name": "learning_paths",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "slug",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "description",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "''::text",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "cover_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "modality",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'asynchronous'::text",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "duration_hours",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 7,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "access_months",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "12",
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 8,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "sort_order",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 9,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "is_published",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "true",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 10,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 11,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 12,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "learning_paths",
+          "column_name": "discount_percent",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 13,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "learning_paths",
+          "name": "learning_paths_discount_range",
+          "type": "c",
+          "definition": "CHECK (((discount_percent >= 0) AND (discount_percent <= 100)))"
+        },
+        {
+          "table_name": "learning_paths",
+          "name": "learning_paths_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "learning_paths",
+          "name": "learning_paths_slug_key",
+          "type": "u",
+          "definition": "UNIQUE (slug)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "learning_paths",
+          "indexname": "learning_paths_pkey",
+          "indexdef": "CREATE UNIQUE INDEX learning_paths_pkey ON public.learning_paths USING btree (id)"
+        },
+        {
+          "tablename": "learning_paths",
+          "indexname": "learning_paths_slug_key",
+          "indexdef": "CREATE UNIQUE INDEX learning_paths_slug_key ON public.learning_paths USING btree (slug)"
+        }
+      ]
+    },
+    "lesson_progress": {
+      "columns": [
+        {
+          "table_name": "lesson_progress",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lesson_progress",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lesson_progress",
+          "column_name": "lesson_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lesson_progress",
+          "column_name": "is_completed",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "YES",
+          "column_default": "false",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lesson_progress",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "lesson_progress",
+          "name": "lesson_progress_lesson_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (lesson_id) REFERENCES lessons(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "lesson_progress",
+          "name": "lesson_progress_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "lesson_progress",
+          "name": "lesson_progress_user_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "lesson_progress",
+          "name": "lesson_progress_user_id_lesson_id_key",
+          "type": "u",
+          "definition": "UNIQUE (user_id, lesson_id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "lesson_progress",
+          "indexname": "lesson_progress_pkey",
+          "indexdef": "CREATE UNIQUE INDEX lesson_progress_pkey ON public.lesson_progress USING btree (id)"
+        },
+        {
+          "tablename": "lesson_progress",
+          "indexname": "lesson_progress_user_id_lesson_id_key",
+          "indexdef": "CREATE UNIQUE INDEX lesson_progress_user_id_lesson_id_key ON public.lesson_progress USING btree (user_id, lesson_id)"
+        }
+      ]
+    },
+    "lessons": {
+      "columns": [
+        {
+          "table_name": "lessons",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "module_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "content_type",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'recorded'::text",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "video_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "zoom_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "live_date",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "drive_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 8,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "order_index",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 9,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 10,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 11,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "content_text",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 12,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "attachment_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 13,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "lessons",
+          "column_name": "attachment_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 14,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "lessons",
+          "name": "lessons_module_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (module_id) REFERENCES modules(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "lessons",
+          "name": "lessons_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "lessons",
+          "indexname": "lessons_pkey",
+          "indexdef": "CREATE UNIQUE INDEX lessons_pkey ON public.lessons USING btree (id)"
+        }
+      ]
+    },
+    "membership_plans": {
+      "columns": [
+        {
+          "table_name": "membership_plans",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "membership_plans",
+          "column_name": "slug",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "membership_plans",
+          "column_name": "name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "membership_plans",
+          "column_name": "months",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "membership_plans",
+          "column_name": "price",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "membership_plans",
+          "column_name": "is_active",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "true",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "membership_plans",
+          "column_name": "sort_order",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 7,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "membership_plans",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 8,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "membership_plans",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 9,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "membership_plans",
+          "column_name": "image_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 10,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "membership_plans",
+          "name": "membership_plans_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "membership_plans",
+          "name": "membership_plans_slug_key",
+          "type": "u",
+          "definition": "UNIQUE (slug)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "membership_plans",
+          "indexname": "membership_plans_pkey",
+          "indexdef": "CREATE UNIQUE INDEX membership_plans_pkey ON public.membership_plans USING btree (id)"
+        },
+        {
+          "tablename": "membership_plans",
+          "indexname": "membership_plans_slug_key",
+          "indexdef": "CREATE UNIQUE INDEX membership_plans_slug_key ON public.membership_plans USING btree (slug)"
+        }
+      ]
+    },
+    "memberships": {
+      "columns": [
+        {
+          "table_name": "memberships",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "memberships",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "memberships",
+          "column_name": "plan_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "memberships",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'pending_payment'::text",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "memberships",
+          "column_name": "start_date",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "memberships",
+          "column_name": "end_date",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "memberships",
+          "column_name": "payment_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "memberships",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 8,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "memberships",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 9,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "memberships",
+          "name": "memberships_payment_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (payment_id) REFERENCES payments(id) ON DELETE SET NULL"
+        },
+        {
+          "table_name": "memberships",
+          "name": "memberships_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "memberships",
+          "name": "memberships_plan_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (plan_id) REFERENCES membership_plans(id)"
+        },
+        {
+          "table_name": "memberships",
+          "name": "memberships_user_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "memberships",
+          "indexname": "idx_memberships_user",
+          "indexdef": "CREATE INDEX idx_memberships_user ON public.memberships USING btree (user_id, status)"
+        },
+        {
+          "tablename": "memberships",
+          "indexname": "memberships_pkey",
+          "indexdef": "CREATE UNIQUE INDEX memberships_pkey ON public.memberships USING btree (id)"
+        }
+      ]
+    },
+    "modules": {
+      "columns": [
+        {
+          "table_name": "modules",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "modules",
+          "column_name": "course_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "modules",
+          "column_name": "title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "modules",
+          "column_name": "order_index",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "modules",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "modules",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "modules",
+          "name": "modules_course_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "modules",
+          "name": "modules_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "modules",
+          "indexname": "modules_pkey",
+          "indexdef": "CREATE UNIQUE INDEX modules_pkey ON public.modules USING btree (id)"
+        }
+      ]
+    },
+    "path_courses": {
+      "columns": [
+        {
+          "table_name": "path_courses",
+          "column_name": "path_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "path_courses",
+          "column_name": "course_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "path_courses",
+          "column_name": "sort_order",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "character_maximum_length": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "path_courses",
+          "column_name": "level",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "path_courses",
+          "name": "path_courses_course_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "path_courses",
+          "name": "path_courses_path_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (path_id) REFERENCES learning_paths(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "path_courses",
+          "name": "path_courses_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (path_id, course_id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "path_courses",
+          "indexname": "idx_path_courses_path",
+          "indexdef": "CREATE INDEX idx_path_courses_path ON public.path_courses USING btree (path_id, sort_order)"
+        },
+        {
+          "tablename": "path_courses",
+          "indexname": "path_courses_pkey",
+          "indexdef": "CREATE UNIQUE INDEX path_courses_pkey ON public.path_courses USING btree (path_id, course_id)"
+        }
+      ]
+    },
+    "payments": {
+      "columns": [
+        {
+          "table_name": "payments",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "enrollment_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "payment_type",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'full'::text",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "amount",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 10,
+          "numeric_scale": 2,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "ticket_code",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "comprobant_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'pending_approval'::text",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "approved_by",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 8,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "paid_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 9,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 10,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 11,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "path_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 12,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "payments",
+          "column_name": "membership_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 13,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "payments",
+          "name": "payments_approved_by_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (approved_by) REFERENCES users(id)"
+        },
+        {
+          "table_name": "payments",
+          "name": "payments_enrollment_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (enrollment_id) REFERENCES enrollments(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "payments",
+          "name": "payments_membership_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (membership_id) REFERENCES memberships(id) ON DELETE SET NULL"
+        },
+        {
+          "table_name": "payments",
+          "name": "payments_path_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (path_id) REFERENCES learning_paths(id) ON DELETE SET NULL"
+        },
+        {
+          "table_name": "payments",
+          "name": "payments_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "payments",
+          "indexname": "payments_pkey",
+          "indexdef": "CREATE UNIQUE INDEX payments_pkey ON public.payments USING btree (id)"
+        }
+      ]
+    },
+    "permissions": {
+      "columns": [
+        {
+          "table_name": "permissions",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "permissions",
+          "column_name": "code",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "permissions",
+          "column_name": "description",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "permissions",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "permissions",
+          "name": "permissions_code_key",
+          "type": "u",
+          "definition": "UNIQUE (code)"
+        },
+        {
+          "table_name": "permissions",
+          "name": "permissions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "permissions",
+          "indexname": "permissions_code_key",
+          "indexdef": "CREATE UNIQUE INDEX permissions_code_key ON public.permissions USING btree (code)"
+        },
+        {
+          "tablename": "permissions",
+          "indexname": "permissions_pkey",
+          "indexdef": "CREATE UNIQUE INDEX permissions_pkey ON public.permissions USING btree (id)"
+        }
+      ]
+    },
+    "questions": {
+      "columns": [
+        {
+          "table_name": "questions",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "questions",
+          "column_name": "lesson_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "questions",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "questions",
+          "column_name": "question_text",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "questions",
+          "column_name": "answer_text",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "questions",
+          "column_name": "teacher_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "questions",
+          "column_name": "is_answered",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "YES",
+          "column_default": "false",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "questions",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 8,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "questions",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 9,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "questions",
+          "name": "questions_lesson_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (lesson_id) REFERENCES lessons(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "questions",
+          "name": "questions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "questions",
+          "name": "questions_teacher_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (teacher_id) REFERENCES users(id)"
+        },
+        {
+          "table_name": "questions",
+          "name": "questions_user_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "questions",
+          "indexname": "questions_pkey",
+          "indexdef": "CREATE UNIQUE INDEX questions_pkey ON public.questions USING btree (id)"
+        }
+      ]
+    },
+    "role_permissions": {
+      "columns": [
+        {
+          "table_name": "role_permissions",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "role_permissions",
+          "column_name": "role_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "role_permissions",
+          "column_name": "permission_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "role_permissions",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "role_permissions",
+          "name": "role_permissions_permission_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "role_permissions",
+          "name": "role_permissions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "role_permissions",
+          "name": "role_permissions_role_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "role_permissions",
+          "name": "role_permissions_role_id_permission_id_key",
+          "type": "u",
+          "definition": "UNIQUE (role_id, permission_id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "role_permissions",
+          "indexname": "role_permissions_pkey",
+          "indexdef": "CREATE UNIQUE INDEX role_permissions_pkey ON public.role_permissions USING btree (id)"
+        },
+        {
+          "tablename": "role_permissions",
+          "indexname": "role_permissions_role_id_permission_id_key",
+          "indexdef": "CREATE UNIQUE INDEX role_permissions_role_id_permission_id_key ON public.role_permissions USING btree (role_id, permission_id)"
+        }
+      ]
+    },
+    "roles": {
+      "columns": [
+        {
+          "table_name": "roles",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "roles",
+          "column_name": "name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "roles",
+          "column_name": "description",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "roles",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "roles",
+          "name": "roles_name_key",
+          "type": "u",
+          "definition": "UNIQUE (name)"
+        },
+        {
+          "table_name": "roles",
+          "name": "roles_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "roles",
+          "indexname": "roles_name_key",
+          "indexdef": "CREATE UNIQUE INDEX roles_name_key ON public.roles USING btree (name)"
+        },
+        {
+          "tablename": "roles",
+          "indexname": "roles_pkey",
+          "indexdef": "CREATE UNIQUE INDEX roles_pkey ON public.roles USING btree (id)"
+        }
+      ]
+    },
+    "todos": {
+      "columns": [
+        {
+          "table_name": "todos",
+          "column_name": "id",
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0,
+          "ordinal_position": 1,
+          "is_identity": "YES"
+        },
+        {
+          "table_name": "todos",
+          "column_name": "title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "todos",
+          "column_name": "completed",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "false",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "todos",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "todos",
+          "name": "todos_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "todos",
+          "indexname": "todos_pkey",
+          "indexdef": "CREATE UNIQUE INDEX todos_pkey ON public.todos USING btree (id)"
+        }
+      ]
+    },
+    "user_roles": {
+      "columns": [
+        {
+          "table_name": "user_roles",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "user_roles",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "user_roles",
+          "column_name": "role_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "user_roles",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "user_roles",
+          "name": "user_roles_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "user_roles",
+          "name": "user_roles_role_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "user_roles",
+          "name": "user_roles_user_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "user_roles",
+          "name": "user_roles_user_id_role_id_key",
+          "type": "u",
+          "definition": "UNIQUE (user_id, role_id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "user_roles",
+          "indexname": "user_roles_pkey",
+          "indexdef": "CREATE UNIQUE INDEX user_roles_pkey ON public.user_roles USING btree (id)"
+        },
+        {
+          "tablename": "user_roles",
+          "indexname": "user_roles_user_id_role_id_key",
+          "indexdef": "CREATE UNIQUE INDEX user_roles_user_id_role_id_key ON public.user_roles USING btree (user_id, role_id)"
+        }
+      ]
+    },
+    "users": {
+      "columns": [
+        {
+          "table_name": "users",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 1,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "users",
+          "column_name": "full_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 2,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "users",
+          "column_name": "email",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 3,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "users",
+          "column_name": "phone",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 4,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "users",
+          "column_name": "nationality",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 5,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "users",
+          "column_name": "avatar_url",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 6,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "users",
+          "column_name": "is_active",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "YES",
+          "column_default": "true",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 7,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "users",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 8,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "users",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "timezone('utc'::text, now())",
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 9,
+          "is_identity": "NO"
+        },
+        {
+          "table_name": "users",
+          "column_name": "document_number",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "character_maximum_length": null,
+          "numeric_precision": null,
+          "numeric_scale": null,
+          "ordinal_position": 10,
+          "is_identity": "NO"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "users",
+          "name": "users_email_key",
+          "type": "u",
+          "definition": "UNIQUE (email)"
+        },
+        {
+          "table_name": "users",
+          "name": "users_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (id) REFERENCES auth.users(id)"
+        },
+        {
+          "table_name": "users",
+          "name": "users_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "tablename": "users",
+          "indexname": "users_email_key",
+          "indexdef": "CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email)"
+        },
+        {
+          "tablename": "users",
+          "indexname": "users_pkey",
+          "indexdef": "CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)"
+        }
+      ]
+    }
+  }
+}

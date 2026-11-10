@@ -1,0 +1,21 @@
+{
+    "$schema":  "https://opencode.ai/config.json",
+    "mcp":  {
+                "kontec_db":  {
+                                  "type":  "local",
+                                  "command":  [
+                                                  "npx",
+                                                  "-y",
+                                                  "@benborla29/mcp-server-mysql"
+                                              ],
+                                  "env":  {
+                                              "MYSQL_HOST":  "srv1845.hstgr.io",
+                                              "MYSQL_PORT":  "3306",
+                                              "MYSQL_USER":  "u969268720_CVyjz",
+                                              "MYSQL_PASS":  "Kontecacademy.bo26",
+                                              "MYSQL_DB":  "u969268720_1u4Nm"
+                                          },
+                                  "enabled":  true
+                              }
+            }
+}

@@ -40,7 +40,10 @@ class TaskRepositoryImpl implements TaskRepository {
       final model = await _remote.createTask(title);
       return (model.toEntity(), null);
     } on ServerException catch (e) {
-      return (_emptyTask(title), ServerFailure(e.message, statusCode: e.statusCode));
+      return (
+        _emptyTask(title),
+        ServerFailure(e.message, statusCode: e.statusCode),
+      );
     } catch (e) {
       return (_emptyTask(title), UnknownFailure(e.toString()));
     }

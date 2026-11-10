@@ -12,22 +12,19 @@ class TaskModel extends Equatable {
   final bool isDone;
 
   factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
-        id: json['id'] is int
-            ? (json['id'] as int).toString()
-            : json['id'] as String,
-        title: json['title'] as String? ?? '',
-        isDone: json['completed'] as bool? ?? false,
-      );
+    id: json['id'] is int
+        ? (json['id'] as int).toString()
+        : json['id'] as String,
+    title: json['title'] as String? ?? '',
+    isDone: json['completed'] as bool? ?? false,
+  );
 
   Map<String, dynamic> toJson() => {'title': title, 'completed': isDone};
 
   Task toEntity() => Task(id: id, title: title, isDone: isDone);
 
-  factory TaskModel.fromEntity(Task task) => TaskModel(
-        id: task.id,
-        title: task.title,
-        isDone: task.isDone,
-      );
+  factory TaskModel.fromEntity(Task task) =>
+      TaskModel(id: task.id, title: task.title, isDone: task.isDone);
 
   @override
   List<Object?> get props => [id, title, isDone];

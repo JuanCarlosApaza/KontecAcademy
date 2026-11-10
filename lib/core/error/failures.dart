@@ -13,7 +13,7 @@ sealed class Failure extends Equatable {
 
 class ServerFailure extends Failure {
   const ServerFailure(String message, {this.statusCode})
-      : super('Error del servidor: $message');
+    : super('Error del servidor: $message');
 
   final int? statusCode;
 
@@ -23,12 +23,12 @@ class ServerFailure extends Failure {
 
 class NetworkFailure extends Failure {
   const NetworkFailure(String message)
-      : super('Sin conexión a internet: $message');
+    : super('Sin conexión a internet: $message');
 }
 
 class CacheFailure extends Failure {
   const CacheFailure(String message)
-      : super('Error de datos locales: $message');
+    : super('Error de datos locales: $message');
 }
 
 class UnknownFailure extends Failure {

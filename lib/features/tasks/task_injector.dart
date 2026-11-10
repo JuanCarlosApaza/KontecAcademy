@@ -9,7 +9,8 @@ import 'domain/usecases/get_tasks.dart';
 ///
 /// Si mañana cambias REST por una base de datos local, solo se edita este
 /// archivo (y la capa `data`), sin tocar el dominio ni la presentación.
-export 'data/repositories/task_repository_impl.dart' show taskRepositoryProvider;
+export 'data/repositories/task_repository_impl.dart'
+    show taskRepositoryProvider;
 
 final getTasksProvider = Provider<GetTasks>(
   (ref) => GetTasks(ref.watch(taskRepositoryProvider)),

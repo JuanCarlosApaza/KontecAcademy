@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'api_config.dart';
+import 'error_logging_interceptor.dart';
 
 /// Cliente HTTP único de la aplicación.
 ///
@@ -17,11 +18,12 @@ final dioProvider = Provider<Dio>((ref) {
     ),
   );
 
+  // Errores SIEMPRE (también en release): traza única de fallos de API.
+  dio.interceptors.add(const ErrorLoggingInterceptor());
+
   // Solo loguea en modo desarrollo.
   assert(() {
-    dio.interceptors.add(
-      LogInterceptor(requestBody: true, responseBody: true),
-    );
+    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
     return true;
   }());
 

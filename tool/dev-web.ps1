@@ -27,6 +27,18 @@ param(
 # en él vive la instancia de Edge con el CORS desactivado, sin tocar tu
 # Edge normal (cookies, sesiones y pestañas intactas).
 $noCorsProfile = Join-Path $PSScriptRoot '..\.dart_tool\nocors-profile'
+
+# Un solo proceso puede usar un mismo perfil: si una sesión anterior de
+# Edge sigue viva, el nuevo arranque falla con "file is being used by
+# another program" (errno 1224). La cerramos antes de arrancar.
+$stale = Get-CimInstance Win32_Process -Filter "Name='msedge.exe'" |
+  Where-Object { $_.CommandLine -like '*nocors-profile*' }
+if ($stale) {
+  Write-Host 'Cerrando sesión anterior de Edge (perfil de desarrollo)...' -ForegroundColor DarkGray
+  $stale | ForEach-Object {
+    try { Stop-Process -Id $_.ProcessId -Force -ErrorAction Stop } catch { }
+  }
+}
 $flutterArgs = @(
   'run', '-d', 'edge',
   '--web-port', "$Port",

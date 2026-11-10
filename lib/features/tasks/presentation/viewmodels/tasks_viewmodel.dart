@@ -26,13 +26,12 @@ class TasksState {
     bool? isAdding,
     Failure? error,
     bool clearError = false,
-  }) =>
-      TasksState(
-        tasks: tasks ?? this.tasks,
-        isLoading: isLoading ?? this.isLoading,
-        isAdding: isAdding ?? this.isAdding,
-        error: clearError ? null : error ?? this.error,
-      );
+  }) => TasksState(
+    tasks: tasks ?? this.tasks,
+    isLoading: isLoading ?? this.isLoading,
+    isAdding: isAdding ?? this.isAdding,
+    error: clearError ? null : error ?? this.error,
+  );
 }
 
 /// VIEWMODEL (patrón MVVM) de la lista de tareas.
@@ -65,8 +64,9 @@ class TasksViewModel extends Notifier<TasksState> {
 
     state = state.copyWith(isAdding: true, clearError: true);
     try {
-      final (_, failure) = await ref
-          .read(createTaskProvider)(CreateTaskParams(title: title));
+      final (_, failure) = await ref.read(createTaskProvider)(
+        CreateTaskParams(title: title),
+      );
       if (failure != null) {
         state = state.copyWith(isAdding: false, error: failure);
         return;
@@ -89,5 +89,6 @@ class TasksViewModel extends Notifier<TasksState> {
   }
 }
 
-final tasksViewModelProvider =
-    NotifierProvider<TasksViewModel, TasksState>(TasksViewModel.new);
+final tasksViewModelProvider = NotifierProvider<TasksViewModel, TasksState>(
+  TasksViewModel.new,
+);

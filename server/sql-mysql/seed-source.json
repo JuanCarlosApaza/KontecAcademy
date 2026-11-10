@@ -1,0 +1,312 @@
+{
+  "generatedAt": "2026-11-10T18:29:00.444Z",
+  "source": "supabase (xaratebbmgffxijfigio) via pooler — solo lectura",
+  "note": "Datos seed crudos de referencia. 001_seed.sql es el derivado MySQL.",
+  "tables": {
+    "roles": [
+      {
+        "id": "92ebdec9-8437-4ded-aeea-943dcb2a8af1",
+        "name": "teacher",
+        "description": "Docente encargado de dictar cursos y responder preguntas",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "e22576e5-74a4-4ca4-a23d-bae8f31a8eba",
+        "name": "admin",
+        "description": "Administrador del panel",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "6ec501e3-43bc-4ebb-90d1-72be6ad0762e",
+        "name": "student",
+        "description": "Estudiante / cliente",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "4d930be7-56a5-4f49-b191-4c94b02d9343",
+        "name": "coordinador",
+        "description": "coordinador de cursos",
+        "created_at": "2026-11-04 14:58:44"
+      }
+    ],
+    "permissions": [
+      {
+        "id": "032e0a21-7d13-4de9-98c0-3689b4c07777",
+        "code": "courses:create",
+        "description": "Permite crear y editar cursos",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "fa44ecab-bb2c-4f42-8850-4ce25388ce6b",
+        "code": "courses:view",
+        "description": "Permite visualizar contenidos del curso",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "2432ddc1-a52b-439c-a0b3-a447e8a0498d",
+        "code": "payments:approve",
+        "description": "Permite aprobar o rechazar comprobantes de pago",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "a933db71-0e23-4dfc-a67e-d8c1793235f2",
+        "code": "questions:answer",
+        "description": "Permite responder preguntas de los estudiantes",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "e3f15e1c-2041-4baf-b73b-63a18e7297cb",
+        "code": "dashboard:view",
+        "description": "Ver el resumen (KPIs) del panel",
+        "created_at": "2026-11-03 19:18:24"
+      },
+      {
+        "id": "68ab3599-8a63-44ec-9011-f126ea2906bf",
+        "code": "students:view",
+        "description": "Ver estudiantes y sus perfiles",
+        "created_at": "2026-11-03 19:18:24"
+      },
+      {
+        "id": "317be225-5913-4921-b098-de2072835b47",
+        "code": "students:manage",
+        "description": "Quitar o restaurar el acceso de un estudiante a un curso",
+        "created_at": "2026-11-03 19:18:24"
+      },
+      {
+        "id": "0bd98e07-b0e1-4ae3-97e7-7a09406d1c98",
+        "code": "payments:view",
+        "description": "Ver pagos y carritos abandonados",
+        "created_at": "2026-11-03 19:18:24"
+      },
+      {
+        "id": "4574e98c-1dbc-4cab-9c43-eec1e70ca154",
+        "code": "categories:edit",
+        "description": "Crear y renombrar categorías",
+        "created_at": "2026-11-03 19:18:24"
+      },
+      {
+        "id": "2c9c8530-6de5-4861-8d71-59da3c5c1119",
+        "code": "users:view",
+        "description": "Ver usuarios y sus roles",
+        "created_at": "2026-11-03 19:18:24"
+      },
+      {
+        "id": "510ddf50-25bd-4d40-b14b-c479c2b675f3",
+        "code": "users:create",
+        "description": "Crear usuarios",
+        "created_at": "2026-11-03 19:18:24"
+      },
+      {
+        "id": "26d8a2d7-6523-4ecf-973a-e8002377593d",
+        "code": "users:edit",
+        "description": "Editar usuarios (nombre, rol, estado)",
+        "created_at": "2026-11-03 19:18:24"
+      },
+      {
+        "id": "147b4a5a-f982-4211-a251-d6441d568316",
+        "code": "roles:manage",
+        "description": "Gestionar roles y su matriz de permisos",
+        "created_at": "2026-11-03 19:18:24"
+      }
+    ],
+    "role_permissions": [
+      {
+        "id": "acc67676-53ed-4379-8ec8-6dbbed4bce17",
+        "role_id": "e22576e5-74a4-4ca4-a23d-bae8f31a8eba",
+        "permission_id": "032e0a21-7d13-4de9-98c0-3689b4c07777",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "6358fb3e-8d64-4943-96fb-2bf0ba01d252",
+        "role_id": "e22576e5-74a4-4ca4-a23d-bae8f31a8eba",
+        "permission_id": "fa44ecab-bb2c-4f42-8850-4ce25388ce6b",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "28590c08-f4a8-4561-a0ae-c110501a4768",
+        "role_id": "e22576e5-74a4-4ca4-a23d-bae8f31a8eba",
+        "permission_id": "2432ddc1-a52b-439c-a0b3-a447e8a0498d",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "aa187d22-f446-43ff-bc1a-eb2fd6124db0",
+        "role_id": "e22576e5-74a4-4ca4-a23d-bae8f31a8eba",
+        "permission_id": "a933db71-0e23-4dfc-a67e-d8c1793235f2",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "cd97cb5e-bcf5-4924-bcb9-2d404848c711",
+        "role_id": "92ebdec9-8437-4ded-aeea-943dcb2a8af1",
+        "permission_id": "fa44ecab-bb2c-4f42-8850-4ce25388ce6b",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "6bbf259f-561b-46d6-bc69-055634242133",
+        "role_id": "92ebdec9-8437-4ded-aeea-943dcb2a8af1",
+        "permission_id": "a933db71-0e23-4dfc-a67e-d8c1793235f2",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "70178686-c265-4ae1-9243-bae65df63a37",
+        "role_id": "6ec501e3-43bc-4ebb-90d1-72be6ad0762e",
+        "permission_id": "fa44ecab-bb2c-4f42-8850-4ce25388ce6b",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "024cf1f6-d68f-4c77-90f0-fb26a4599336",
+        "role_id": "92ebdec9-8437-4ded-aeea-943dcb2a8af1",
+        "permission_id": "032e0a21-7d13-4de9-98c0-3689b4c07777",
+        "created_at": "2026-11-03 19:18:24"
+      },
+      {
+        "id": "403b2e9d-6e76-479e-bc3d-b16a81851dd1",
+        "role_id": "92ebdec9-8437-4ded-aeea-943dcb2a8af1",
+        "permission_id": "e3f15e1c-2041-4baf-b73b-63a18e7297cb",
+        "created_at": "2026-11-03 19:18:24"
+      }
+    ],
+    "categories": [
+      {
+        "id": "a8a5e7cb-3308-4f22-9e77-e68bac666372",
+        "name": "Estructuras y Concreto",
+        "slug": "estructuras-y-concreto",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "dc4a8936-411a-4695-9320-8eecc8ba7490",
+        "name": "Software de Ingeniería",
+        "slug": "software-de-ingenieria",
+        "created_at": "2026-10-21 12:59:11"
+      },
+      {
+        "id": "24999c81-5dfd-4265-a8b8-237e077f0d2a",
+        "name": "Geotecnia y Vías",
+        "slug": "geotecnia-y-vias",
+        "created_at": "2026-10-21 12:59:11"
+      }
+    ],
+    "learning_paths": [
+      {
+        "id": "1b1c144c-c5db-476b-bb58-71a7f423a6b4",
+        "slug": "ruta-de-prueba-crud",
+        "title": "Ruta de prueba CRUD",
+        "description": "",
+        "cover_url": null,
+        "modality": "asynchronous",
+        "duration_hours": null,
+        "access_months": "12",
+        "sort_order": "0",
+        "is_published": "1",
+        "created_at": "2026-11-05 14:33:10",
+        "updated_at": "2026-11-05 14:33:10",
+        "discount_percent": "0"
+      },
+      {
+        "id": "6fcc9519-6036-43a6-9a52-9301efd75be7",
+        "slug": "estructuras-y-diseno",
+        "title": "Estructuras y diseño",
+        "description": "Ruta de diseño estructural: desde concreto armado hasta detallado de conexiones metálicas.",
+        "cover_url": null,
+        "modality": "asynchronous",
+        "duration_hours": null,
+        "access_months": "12",
+        "sort_order": "1",
+        "is_published": "1",
+        "created_at": "2026-11-05 14:00:41",
+        "updated_at": "2026-11-05 14:00:41",
+        "discount_percent": "20"
+      },
+      {
+        "id": "920a1074-4b6c-4688-b5d3-cf931cb2ce50",
+        "slug": "fundamentos-bim",
+        "title": "Fundamentos BIM",
+        "description": "Da el primer paso en BIM: planificación y gestión4D/5D de proyectos con enfoque práctico.",
+        "cover_url": null,
+        "modality": "asynchronous",
+        "duration_hours": "60",
+        "access_months": "12",
+        "sort_order": "0",
+        "is_published": "1",
+        "created_at": "2026-11-05 14:00:41",
+        "updated_at": "2026-11-05 18:31:43",
+        "discount_percent": "20"
+      }
+    ],
+    "membership_plans": [
+      {
+        "id": "823c6fab-f119-4edf-be26-5e5c3b26c013",
+        "slug": "mensual",
+        "name": "Mensual",
+        "months": "1",
+        "price": "100",
+        "is_active": "1",
+        "sort_order": "0",
+        "created_at": "2026-11-07 15:27:26",
+        "updated_at": "2026-11-09 15:49:19",
+        "image_url": "https://xaratebbmgffxijfigio.supabase.co/storage/v1/object/public/courses/course-1794239354172-8vjh47.png"
+      },
+      {
+        "id": "b858185c-191b-4fd8-a403-a55a66d7b015",
+        "slug": "trimestral(3-meses)",
+        "name": "Trimestral(3 meses)",
+        "months": "3",
+        "price": "300",
+        "is_active": "1",
+        "sort_order": "1",
+        "created_at": "2026-11-07 15:27:26",
+        "updated_at": "2026-11-09 15:49:51",
+        "image_url": "https://xaratebbmgffxijfigio.supabase.co/storage/v1/object/public/courses/course-1794239375043-us3tb3.png"
+      },
+      {
+        "id": "83b2f126-a2cf-4a77-86cf-8507cb828999",
+        "slug": "anual",
+        "name": "Anual",
+        "months": "12",
+        "price": "600",
+        "is_active": "1",
+        "sort_order": "2",
+        "created_at": "2026-11-07 15:27:26",
+        "updated_at": "2026-11-09 15:50:08",
+        "image_url": "https://xaratebbmgffxijfigio.supabase.co/storage/v1/object/public/courses/course-1794239405096-1ojsaj.png"
+      }
+    ],
+    "path_courses": [
+      {
+        "path_id": "6fcc9519-6036-43a6-9a52-9301efd75be7",
+        "course_id": "a0000000-0000-0000-0000-000000000001",
+        "sort_order": "0",
+        "level": "Introductorio"
+      },
+      {
+        "path_id": "6fcc9519-6036-43a6-9a52-9301efd75be7",
+        "course_id": "52dd7e0f-4b32-411b-a4be-924bed757e01",
+        "sort_order": "1",
+        "level": "Intermedio"
+      },
+      {
+        "path_id": "1b1c144c-c5db-476b-bb58-71a7f423a6b4",
+        "course_id": "52dd7e0f-4b32-411b-a4be-924bed757e01",
+        "sort_order": "0",
+        "level": "Introductorio"
+      },
+      {
+        "path_id": "920a1074-4b6c-4688-b5d3-cf931cb2ce50",
+        "course_id": "98edacd2-b938-4c02-b108-c042c52ab2d3",
+        "sort_order": "0",
+        "level": "Introductorio"
+      },
+      {
+        "path_id": "920a1074-4b6c-4688-b5d3-cf931cb2ce50",
+        "course_id": "3f5e08e9-4890-4a9e-b5d6-a7f237688969",
+        "sort_order": "1",
+        "level": "Intermedio"
+      },
+      {
+        "path_id": "920a1074-4b6c-4688-b5d3-cf931cb2ce50",
+        "course_id": "a0000000-0000-0000-0000-000000000001",
+        "sort_order": "2",
+        "level": "Avanzado"
+      }
+    ]
+  }
+}

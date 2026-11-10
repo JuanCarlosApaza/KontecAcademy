@@ -38,6 +38,16 @@ dependencies:
   dio: ^5.11.1
   equatable: ^3.0.0
   go_router: ^18.1.1
+  supabase_flutter: ^2.18.3
+  shared_preferences: ^2.5.6
+  file_picker: ^10.3.3
+  # Aula: abrir el contenido de una lección (video, Zoom, Drive).
+  url_launcher: ^6.3.1
+  # Aula: video de presentación embebido (Android/iOS/Web).
+  youtube_player_iframe: ^5.2.1
+  # Avisos del sistema (registro, errores, éxitos).
+  quickalert: ^1.1.0
+  flutter_quill: ^11.6.0
 
 dev_dependencies:
   flutter_test:

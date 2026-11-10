@@ -15,7 +15,7 @@ export interface Todo {
  * (Equivalente a domain/repositories/task_repository.dart del front)
  */
 export interface TodoRepository {
-  findAll(): Todo[];
-  findById(id: number): Todo | undefined;
-  create(title: string): Todo;
+  findAll(): Promise<Todo[]>;
+  findById(id: number): Promise<Todo | undefined>;
+  create(title: string): Promise<Todo>;
 }

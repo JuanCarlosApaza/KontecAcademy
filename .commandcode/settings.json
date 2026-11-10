@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(flutter:*)",
+      "Shell(Select-Object:*)",
+      "Shell(where:*)",
+      "Shell(for:*)",
+      "Shell(where flutter:*)",
+      "Shell(do:*)",
+      "Shell(npm:*)",
+      "powershell",
+      "Shell(kill:*)",
+      "Shell(del:*)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

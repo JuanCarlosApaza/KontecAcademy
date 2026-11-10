@@ -14,17 +14,27 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "lint": "npm run typecheck"
+    "lint": "npm run typecheck",
+    "db:sql": "tsx tool/db-sql.ts"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^1.1.0",
+    "@supabase/supabase-js": "^2.118.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "dotenv": "^18.0.8",
+    "express": "^5.1.0",
+    "multer": "^2.5.0",
+    "mysql2": "^3.24.6",
+    "pdf-lib": "^1.17.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.6",
+    "@types/multer": "^2.3.0",
     "@types/node": "^24.0.0",
+    "@types/pg": "^8.23.1",
     "@types/supertest": "^6.0.3",
+    "pg": "^8.23.1",
     "supertest": "^7.1.0",
     "tsx": "^4.20.0",
     "typescript": "^5.9.0",

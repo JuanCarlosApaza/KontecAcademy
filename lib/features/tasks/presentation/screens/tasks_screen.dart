@@ -29,9 +29,8 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
 
     ref.listen(tasksViewModelProvider, (previous, next) {
       if (next.error != null && previous?.error != next.error) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.error!.message)),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(next.error!.message)));
       }
     });
 
@@ -59,8 +58,9 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                     ),
                     const SizedBox(width: 12),
                     FilledButton(
-                      onPressed:
-                          state.isAdding ? null : () => _addTask(_controller.text),
+                      onPressed: state.isAdding
+                          ? null
+                          : () => _addTask(_controller.text),
                       child: state.isAdding
                           ? const SizedBox.square(
                               dimension: 18,

@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Obligatorio en release: los manifests de debug/profile ya lo traían,
+         pero el de main no, y release no los incluye → sin este permiso la
+         app no alcanza la API ni Supabase. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="kontec"
+        android:label="Kontec Academy"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -23,6 +27,17 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- OAuth con Supabase (login con Google en Android):
+                 el navegador vuelve a la app con
+                 kontec://login-callback#access_token=... -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="kontec"
+                    android:host="login-callback"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
